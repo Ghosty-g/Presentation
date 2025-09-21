@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+/* 🌈 Gradient Hero */
+.hero-gradient {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 🟢 Glass Login Card */
+.glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+/* ✨ Button Glow */
+.btn-glow {
+    background: #00c6ff;
+    background: linear-gradient(to right, #0072ff, #00c6ff);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: .5px;
+    transition: all 0.3s ease;
+}
+.btn-glow:hover {
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    box-shadow: 0 0 12px rgba(0,198,255,0.6);
+}
+
+/* 🎯 Form Inputs */
+form input {
+    border-radius: .5rem !important;
+}
+</style>
+
+<!-- 🌈 Hero Section -->
+<div class="hero-gradient text-center text-white">
+    <div>
+        <h1 class="display-4 fw-bold mb-3"><i class="fa fa-user-lock me-2"></i>Welcome Back</h1>
+        <p class="lead">Log in to manage your bookings and explore upcoming holidays.</p>
+    </div>
+</div>
+
+<!-- 🟢 Login Section -->
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="glass-card">
+                <h3 class="text-center text-primary fw-bold mb-4">
+                    <i class="fa fa-sign-in-alt me-2"></i> Secure Login
+                </h3>
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold" for="{{ field.id_for_label }}">
+                                {{ field.label }}
+                            </label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="text-danger small">{{ field.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-glow w-100 py-2">
+                        <i class="fa fa-unlock-alt me-1"></i> Login
+                    </button>
+                </form>
+
+                <hr class="my-4">
+
+                <!-- Links -->
+                <p class="text-center mb-1">
+                    New here?
+                    <a href="{% url 'Userid:signup' %}" class="fw-bold text-decoration-none text-primary">Create an Account</a>
+                </p>
+                <p class="text-center small mb-0">
+                    Forgot password?
+                    <a href="#" class="text-decoration-none">Reset here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
+
+
